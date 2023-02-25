@@ -2,3 +2,18 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Model files
+*.pt
+
+# Training logs
+1_Detection_Model/wandb/
+
+# Cache files
+**/*.cache
+
+# Checkpoints
+.ipynb_checkpoints/
+
+# Model outputs
+Detection_Model_Output

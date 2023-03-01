@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Temporary data
+*.zip
+Dataset/Segmentation_Dataset/
+
 # Model files
 *.pt
 
@@ -17,3 +21,5 @@ __pycache__/
 
 # Model outputs
 Detection_Model_Output
+Segmentation_Model_Output
+/1_Detection_Model/runs/

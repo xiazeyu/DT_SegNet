@@ -1,0 +1,12 @@
+_base_: '../_base_/dtsegnet.yml'
+
+batch_size: 1
+iters: 160000
+
+model:
+  type: UNet3Plus
+  in_channels: 3
+  num_classes: 2
+  is_batchnorm: True
+  is_deepsup: False
+  is_CGM: False

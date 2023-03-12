@@ -1,4 +1,4 @@
-_base_: '../_base_/dtsegnet.yml'
+_base_: '../_base_/baseline.yml'
 
 batch_size: 1
 iters: 80000

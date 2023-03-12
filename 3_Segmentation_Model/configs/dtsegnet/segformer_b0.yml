@@ -1,7 +1,7 @@
 _base_: '../_base_/dtsegnet.yml'
 
 batch_size: 1
-iters: 160000
+iters: 80000
 
 model:
   type: SegFormer

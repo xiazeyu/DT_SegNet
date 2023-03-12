@@ -1,0 +1,4 @@
+val/18.png segmentation_labels/18.png
+val/2.png segmentation_labels/2.png
+val/22.png segmentation_labels/22.png
+val/7.png segmentation_labels/7.png

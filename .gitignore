@@ -22,4 +22,5 @@ Dataset/Segmentation_Dataset/
 # Model outputs
 Detection_Model_Output
 Segmentation_Model_Output
-/1_Detection_Model/runs/
+1_Detection_Model/runs/
+Baseline_2_Model_Output/

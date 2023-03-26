@@ -1,0 +1,15 @@
+train/10.png segmentation_labels/10.png
+train/11.png segmentation_labels/11.png
+train/12.png segmentation_labels/12.png
+train/13.png segmentation_labels/13.png
+train/15.png segmentation_labels/15.png
+train/16.png segmentation_labels/16.png
+train/17.png segmentation_labels/17.png
+train/19.png segmentation_labels/19.png
+train/21.png segmentation_labels/21.png
+train/23.png segmentation_labels/23.png
+train/24.png segmentation_labels/24.png
+train/3.png segmentation_labels/3.png
+train/4.png segmentation_labels/4.png
+train/6.png segmentation_labels/6.png
+train/8.png segmentation_labels/8.png

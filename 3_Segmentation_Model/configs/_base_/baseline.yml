@@ -1,0 +1,53 @@
+batch_size: 1
+iters: 80000
+
+train_dataset:
+  type: Dataset
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset
+  train_path: /root/autodl-tmp/DT_SegNet/Dataset/train.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: RandomHorizontalFlip
+    - type: RandomVerticalFlip
+    - type: Normalize
+  mode: train
+
+val_dataset:
+  type: Dataset
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset
+  val_path: /root/autodl-tmp/DT_SegNet/Dataset/val.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: Normalize
+  mode: val
+
+test_dataset:
+  type: Dataset
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset
+  val_path: /root/autodl-tmp/DT_SegNet/Dataset/test.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: Normalize
+  mode: val
+
+optimizer:
+  type: sgd
+  momentum: 0.9
+  weight_decay: 4.0e-5
+
+lr_scheduler:
+  type: PolynomialDecay
+  learning_rate: 0.01
+  end_lr: 0
+  power: 0.9
+
+loss:
+  types:
+    - type: CrossEntropyLoss
+  coef: [1]

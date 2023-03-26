@@ -1,10 +1,10 @@
-batch_size: 4
-iters: 40000
+batch_size: 1
+iters: 80000
 
 train_dataset:
   type: Dataset
-  dataset_root: /content/DT_SegNet/Dataset/Segmentation_Dataset
-  train_path: /content/DT_SegNet/Dataset/Segmentation_Dataset/train.txt
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset
+  train_path: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset/train.txt
   num_classes: 2
   transforms:
     - type: Resize
@@ -16,8 +16,8 @@ train_dataset:
 
 val_dataset:
   type: Dataset
-  dataset_root: /content/DT_SegNet/Dataset/Segmentation_Dataset
-  val_path: /content/DT_SegNet/Dataset/Segmentation_Dataset/val.txt
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset
+  val_path: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset/val.txt
   num_classes: 2
   transforms:
     - type: Resize
@@ -27,8 +27,8 @@ val_dataset:
 
 test_dataset:
   type: Dataset
-  dataset_root: /content/DT_SegNet/Dataset/Segmentation_Dataset
-  val_path: /content/DT_SegNet/Dataset/Segmentation_Dataset/test.txt
+  dataset_root: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset
+  val_path: /root/autodl-tmp/DT_SegNet/Dataset/Segmentation_Dataset/test.txt
   num_classes: 2
   transforms:
     - type: Resize

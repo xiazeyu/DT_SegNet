@@ -2,3 +2,27 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
+# Temporary data
+*.zip
+Dataset/Segmentation_Dataset/
+Dataset/SD_KF/
+
+# Model files
+*.pt
+
+# Training logs
+1_Detection_Model/wandb/
+
+# Cache files
+**/*.cache
+
+# Checkpoints
+.ipynb_checkpoints/
+
+# Model outputs
+Detection_Model_Output
+Segmentation_Model_Output
+1_Detection_Model/runs/
+Baseline_2_Model_Output/
+Models/

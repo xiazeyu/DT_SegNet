@@ -1,0 +1,5 @@
+test/1.png segmentation_labels/1.png
+test/14.png segmentation_labels/14.png
+test/20.png segmentation_labels/20.png
+test/5.png segmentation_labels/5.png
+test/9.png segmentation_labels/9.png

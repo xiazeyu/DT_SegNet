@@ -6,6 +6,10 @@ The performance of advanced materials for extreme environments is underpinned by
 
 ## Getting Started
 
+### Quick Start
+
+You can use the [Inference_Colab.ipynb](https://colab.research.google.com/github/xiazeyu/DT_SegNet/blob/main/Inference_Colab.ipynb) to perform online inference.
+
 ### Hardware requirement
 
 - Operation System: Windows or Linux

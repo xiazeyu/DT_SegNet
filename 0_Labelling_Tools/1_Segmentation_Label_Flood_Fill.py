@@ -10,33 +10,36 @@ def parse_args():
     parser = argparse.ArgumentParser(
         formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     parser.add_argument(
-        'input_dir', help='input label directory produced by EISeg')
+        'input_dir', help='input grey-scale label directory produced by EISeg')
     parser.add_argument(
         'output_dir', help='output YOLOv5 bounding box label directory')
     return parser.parse_args()
 
 
 def flood_fill(x, y, bx, ex, by, ey):
+    # curreny (x, y), begin x, end x, begin y, end y
+    global np_data
     nexts = [(1, 0, 0, 1, 0, 0), (-1, 0, 1, 0, 0, 0),
              (0, 1, 0, 0, 0, 1), (0, -1, 0, 0, 1, 0)]
-    for next_x, next_y, off_bx, off_ex, off_by, off_ey in nexts:
-        new_x = x + next_x
-        new_y = y + next_y
+    q = [(x, y)]
+    while(len(q) != 0):
+        (x, y) = q.pop()
+        for next_x, next_y, off_bx, off_ex, off_by, off_ey in nexts:
+            new_x = x + next_x
+            new_y = y + next_y
 
-        if new_x < 0 or new_x >= np_data.shape[0] or new_y < 0 or new_y >= np_data.shape[1]:
-            continue
-        if np_data[new_x][new_y] != 1:
-            continue
+            if new_x < 0 or new_x >= np_data.shape[0] or new_y < 0 or new_y >= np_data.shape[1]:
+                continue
+            if np_data[new_x][new_y] != 1:
+                continue
 
-        np_data[new_x][new_y] = 0
+            np_data[new_x][new_y] = 0
+            q.append((new_x, new_y))
 
-        pbx, pex, pby, pey = flood_fill(
-            new_x, new_y, new_x + off_bx, new_x + off_ex, new_y + off_by, new_y + off_ey)
-
-        bx = min(bx, pbx)
-        ex = max(ex, pex)
-        by = min(by, pby)
-        ey = max(ey, pey)
+            bx = min(bx, new_x + off_bx)
+            ex = max(ex, new_x + off_ex)
+            by = min(by, new_y + off_by)
+            ey = max(ey, new_y + off_ey)
 
     return bx, ex, by, ey
 
@@ -57,7 +60,6 @@ def segmentation_label_flood_fill(args):
 
         data = Image.open(filename)
         data = data.convert('L')
-        data.show()
         np_data = np.array(data)
         np_data[np_data != 0] = 1
 

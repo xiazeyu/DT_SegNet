@@ -1,0 +1,69 @@
+_base_: '../_base_/dtsegnet.yml'
+
+batch_size: 1
+iters: 2000
+
+train_dataset:
+  type: Dataset
+  dataset_root: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset
+  train_path: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset/train.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: RandomHorizontalFlip
+    - type: RandomVerticalFlip
+    - type: Normalize
+  mode: train
+
+val_dataset:
+  type: Dataset
+  dataset_root: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset
+  val_path: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset/train.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: Normalize
+  mode: val
+
+test_dataset:
+  type: Dataset
+  dataset_root: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset
+  val_path: /content/DT_SegNet/FineTuneDataset/Segmentation_Dataset/train.txt
+  num_classes: 2
+  transforms:
+    - type: Resize
+      target_size: [512, 512]
+    - type: Normalize
+  mode: val
+
+model:
+  type: SegFormer
+  backbone:
+    type: MixVisionTransformer_B1
+  embedding_dim: 256
+  num_classes: 2
+  pretrained: /content/DT_SegNet/Models/segmentation.pdparams
+
+optimizer:
+  _inherited_: False
+  type: AdamW
+  beta1: 0.9
+  beta2: 0.999
+  weight_decay: 0.01
+
+lr_scheduler:
+  type: PolynomialDecay
+  learning_rate: 0.00006
+  power: 1
+
+loss:
+  types:
+    - type: CrossEntropyLoss
+  coef: [1]
+
+test_config:
+    is_slide: True
+    crop_size: [1024, 1024]
+    stride: [768, 768]

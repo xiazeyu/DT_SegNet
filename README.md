@@ -1,6 +1,11 @@
 # Accurate identification and measurement of the precipitate area by two-stage deep neural networks in novel chromium-based alloys
 
-[![DOI](https://zenodo.org/badge/583010192.svg)](https://zenodo.org/badge/latestdoi/583010192)
+[![paper doi](https://img.shields.io/badge/paper%20doi-10.1039%2FD3CP00402C-blue)](https://doi.org/10.1039/D3CP00402C)
+![open access](https://img.shields.io/badge/open%20access-free-green)
+[![paper license](http://mirrors.creativecommons.org/presskit/buttons/80x15/svg/by-nc.svg)](http://creativecommons.org/licenses/by-nc/3.0/)
+
+[![code doi](https://img.shields.io/badge/code%20doi-10.5281%2Fzenodo.7510032-blue)](https://doi.org/10.5281/zenodo.7510032)
+[![code license](https://img.shields.io/github/license/xiazeyu/DT_SegNet?color=green&label=code%20license)](./LICENSE)
 
 ## About The Project
 

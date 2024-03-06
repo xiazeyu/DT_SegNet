@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+message: If you use this software, please cite it as below.
+authors:
+  - family-names: Xia
+    given-names: Zeyu
+    orcid: https://orcid.org/0000-0003-0234-5857
+  - family-names: Ma
+    given-names: Kan
+    orcid: https://orcid.org/0000-0001-5729-5477
+  - family-names: Cheng
+    given-names: Sibo
+    orcid: https://orcid.org/0000-0002-8707-2589
+  - family-names: Blackburn
+    given-names: Thomas
+    orcid: https://orcid.org/0000-0001-9160-3285
+  - family-names: Peng
+    given-names: Ziling
+  - family-names: Zhu
+    given-names: Kewei
+  - family-names: Zhang
+    given-names: Weihang
+  - family-names: Xiao
+    given-names: Dunhui
+  - family-names: Knowles
+    given-names: Alexander J
+  - family-names: Arcucci
+    given-names: Rossella
+title: DT_SegNet
+identifiers:
+  - type: doi
+    value: 10.1039/d3cp00402c
+version: v1.1.2
+date-released: 2023-01-06

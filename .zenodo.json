@@ -1,0 +1,61 @@
+{
+  "upload_type": "software",
+  "title": "DT_SegNet",
+  "creators": [
+    {
+      "name": "Xia, Zeyu",
+      "affiliation": "Queensland University of Technology",
+      "orcid": "0000-0003-0234-5857"
+    },
+    {
+      "name": "Ma, Kan",
+      "affiliation": "University of Birmingham",
+      "orcid": "0000-0001-5729-5477"
+    },
+    {
+      "name": "Cheng, Sibo",
+      "affiliation": "Imperial College London",
+      "orcid": "0000-0002-8707-2589"
+    },
+    {
+      "name": "Blackburn, Thomas",
+      "affiliation": "University of Birmingham",
+      "orcid": "0000-0001-9160-3285"
+    },
+    {
+      "name": "Peng, Ziling",
+      "affiliation": "Institute of Advanced Science Facilities"
+    },
+    {
+      "name": "Zhu, Kewei",
+      "affiliation": "University of York"
+    },
+    {
+      "name": "Zhang, Weihang",
+      "affiliation": "Imperial College London"
+    },
+    {
+      "name": "Xiao, Dunhui",
+      "affiliation": "Tongji University"
+    },
+    {
+      "name": "Knowles, Alexander J",
+      "affiliation": "University of Birmingham"
+    },
+    {
+      "name": "Arcucci, Rossella",
+      "affiliation": "Imperial College London"
+    }
+  ],
+  "description": "A comprehensive, two-tiered deep learning approach designed for precise object detection and segmentation in electron microscopy (EM) images.",
+  "access_right": "open",
+  "license": "mit",
+  "related_identifiers": [
+    {
+      "scheme": "doi",
+      "identifier": "10.1039/D3CP00402C",
+      "relation": "isSupplementTo",
+      "resource_type": "article"
+    }
+  ]
+}

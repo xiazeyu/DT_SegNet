@@ -111,6 +111,29 @@ The `Output/` folder holds this project's output images and NumPy metrics, inclu
 |    PaddleSeg  |      B1           |             SegFormer B1                                     |
 |   dtsegnet    |   DT-SegNet       |           DT-SegNet, with overlapping ROIs joined            |
 
+## Reference
+
+```bibtex
+@article{xia2023Accurate,
+ author = {Zeyu Xia and Kan Ma and Sibo Cheng and Thomas Blackburn and Ziling Peng and Kewei Zhu and Weihang Zhang and Dunhui Xiao and Alexander J Knowles and Rossella Arcucci},
+ copyright = {CC BY-NC 3.0},
+ doi = {10.1039/d3cp00402c},
+ issn = {1463-9076},
+ journal = {Physical Chemistry Chemical Physics},
+ keywords = {},
+ language = {English},
+ month = {6},
+ number = {23},
+ pages = {15970--15987},
+ pmid = {37265373},
+ publisher = {Royal Society of Chemistry (RSC)},
+ title = {Accurate Identification and Measurement of the Precipitate Area by Two-Stage Deep Neural Networks in Novel Chromium-Based Alloy},
+ url = {https://pubs.rsc.org/en/content/articlelanding/2023/CP/D3CP00402C},
+ volume = {25},
+ year = {2023}
+}
+
+```
 
 ## License
 

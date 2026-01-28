@@ -1,0 +1,81 @@
+# Default configuration for DT-SegNet
+# Copy this file to config.yaml and modify as needed
+
+# Model Configuration
+model:
+  # Detection model (YOLOv5)
+  detector:
+    size: l  # n, s, m, l, x
+    num_classes: 1
+    img_size: 1280
+  
+  # Segmentation model (SegFormer)
+  segmentor:
+    size: b1  # b0, b1, b2, b3, b4, b5
+    num_classes: 2
+    embedding_dim: 256
+  
+  # End-to-end settings
+  roi_dilation: 1.5
+  conf_threshold: 0.475
+  iou_threshold: 0.45
+
+# Training Configuration
+training:
+  # General
+  batch_size: 8
+  num_workers: 4
+  seed: 42
+  use_amp: true
+  
+  # Optimizer
+  optimizer:
+    type: AdamW
+    lr: 0.0001
+    weight_decay: 0.01
+    betas: [0.9, 0.999]
+  
+  # Learning rate scheduler
+  scheduler:
+    type: CosineAnnealing
+    T_max: 100
+    eta_min: 0.000001
+  
+  # Epochs
+  epochs_detector: 100
+  epochs_segmentor: 100
+  patience: 50  # Early stopping patience
+
+# Data Configuration
+data:
+  # Root directory
+  root: ./Dataset
+  
+  # Splits
+  train_dir: train
+  val_dir: val
+  test_dir: test
+  
+  # Segmentation labels
+  seg_labels_dir: labels
+  
+  # Augmentation
+  augmentation:
+    horizontal_flip: 0.5
+    vertical_flip: 0.5
+    random_rotate90: 0.5
+    brightness_contrast: 0.2
+    gaussian_noise: 0.1
+
+# Inference Configuration
+inference:
+  batch_size: 1
+  save_intermediate: false
+  output_format: png  # png, npy, both
+
+# Output Configuration
+output:
+  dir: ./outputs
+  save_best: true
+  save_every: 10  # Save checkpoint every N epochs
+  log_tensorboard: true

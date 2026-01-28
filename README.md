@@ -1,150 +1,277 @@
-# Accurate identification and measurement of the precipitate area by two-stage deep neural networks in novel chromium-based alloys
+# DT-SegNet v2.0
 
-[![paper doi](https://img.shields.io/badge/paper%20doi-10.1039%2FD3CP00402C-blue)](https://doi.org/10.1039/D3CP00402C)
-![open access](https://img.shields.io/badge/open%20access-free-green)
-[![paper license](http://mirrors.creativecommons.org/presskit/buttons/80x15/svg/by-nc.svg)](http://creativecommons.org/licenses/by-nc/3.0/)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![PyTorch 2.0+](https://img.shields.io/badge/pytorch-2.0+-orange.svg)](https://pytorch.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 
-[![code doi](https://img.shields.io/badge/code%20doi-10.5281%2Fzenodo.7510032-blue)](https://doi.org/10.5281/zenodo.7510032)
-[![code license](https://img.shields.io/github/license/xiazeyu/DT_SegNet?color=green&label=code%20license)](./LICENSE)
+**DT-SegNet: Two-Stage Deep Learning for Precipitate Detection and Segmentation**
 
-## About The Project
+A PyTorch implementation of an end-to-end two-stage deep learning model combining YOLOv5-based detection and SegFormer-based segmentation for precise precipitate identification in electron microscopy images.
 
-The performance of advanced materials for extreme environments is underpinned by their microstruc- ture, such as the size and distribution of nano- to micro-sized reinforcing phase(s). Chromium-based superalloys are a recently proposed alternative to conventional face-centred-cubic superalloys for high-temperature applications, e.g., Concentrated Solar Power. Their development requires the de- termination of precipitate volume fraction and size distribution using Electron Microscopy (EM), as these properties are crucial for the thermal stability and mechanical properties of chromium superal- loys. Traditional approaches to EM image processing utilise filtering with a fixed contrast threshold, leading to weak robustness to background noise and poor generalisability to different materials. It also requires an enormous amount of time for manual object measurements. Efficient and accurate object detection and segmentation are therefore highly desired to accelerate the development of novel materials like chromium-based superalloys. To address these bottlenecks, based on YOLOv5 and SegFormer structures, this study proposes an end-to-end, two-stage deep learning scheme, DT- SegNet, to perform object detection and segmentation for EM images. The proposed approach can thus benefit from the training efficiency of Convolutional Neural Networks at the detection stage (i.e., a small number of training images required) and the accuracy of the Vision Transformer at the segmentation stage. Extensive numerical experiments demonstrate that the proposed DT-SegNet significantly outperforms the state-of-the-art segmentation tools offered by Weka and ilastik regard- ing a large number of metrics, including accuracy, precision, recall and F1-score. This model will be a meaningful tool for accelerating alloy development and microstructure examination.
+## ✨ Key Features
 
-## Getting Started
+- **End-to-End Architecture**: Combines detection (YOLOv5) and segmentation (SegFormer) in a single pipeline
+- **Pure PyTorch**: Fully implemented in PyTorch (no PaddlePaddle dependency)
+- **Memory Efficient**: All processing happens in memory without intermediate disk I/O
+- **CLI Interface**: Easy-to-use command-line tools for training and inference
+- **Modern Python**: Uses `uv` for fast dependency management
+- **Well Tested**: Includes comprehensive unit tests
 
-### Quick Start
-
-You can use the [Inference_Colab.ipynb](./Inference_Colab.ipynb) ([Colab link](https://colab.research.google.com/github/xiazeyu/DT_SegNet/blob/main/Inference_Colab.ipynb)) to perform online inference. Or, use following the instructions in  [Finetune_Colab.ipynb](./Finetune_Colab.ipynb) ([Colab link](https://colab.research.google.com/github/xiazeyu/DT_SegNet/blob/main/Finetune_Colab.ipynb)) to perform online finetune.
-
-### Hardware requirement
-
-- Operation System: Windows or Linux
-- Platform: AutoDL / Google Colab Pro
-- GPU: NVIDIA RTX A5000
-- Google Drive space: 10GB
-
-### Software requirement
-
-- Programming language: Python (3.8 or higher)
-- Package Management: Anaconda (Miniconda recommended)
-- Machine Learning Framework: [PyTorch](https://pytorch.org/get-started/locally/) and [PaddlePaddle](https://www.paddlepaddle.org.cn/en/install/quick)
-
-Anaconda environment for labelling on Windows system is in `dtsegnet.yaml`. The environment can be restored by executing `conda create --name dtsegnet --file dtsegnet.yaml` in the console.
-
-Two machine learning frameworks need to be installed following the tutorials on their websites. The necessary environment for training and inferring is stored as a pip requirement file in `1_Detection_Model/requirements.txt` and `3_Segmentation_Model/requirements.txt`.
-
-All the requirements for training and inferring will be installed in the **0_Prepare.ipynb** notebook.
-
-## Dataset
-
-All data for this project are stored in the `Dataset/` folder. All images are numbered for the DT-SegNet pipeline, and the data mapping is stored in [dataset_mapping.csv](./Dataset/dataset_mapping.csv).
-
-The dataset contains the original image, segmentation label and detection label. Detection labels can be used directly for the detection network, but the segmentation label needs to be cropped using codes provided in the notebook before delivering to the segmentation network.
-
-The detection dataset is separated into three sets: `test`, `train`, and `val`.
-
-The segmentation annotation is stored in `Dataset/segmentation_labels/`. The Regions of Interest for the segmentation network with their annotations will be generated before the segmentation stage.
-
-
-## Implementation
-
-### 0 Prepare
-
-Follow the cells in `0_Prepare.ipynb` to prepare required environments.
-
-### 0 Label the dataset
-
-`0_Labelling_Tools/` contains tools of scripts to label the dataset. The user should follow the following process to label the dataset.
-
-- Execute `conda create --name dtsegnet-label --file 0_Labelling_Tools/dtsegnet-label.yaml` to import the Anaconda environment for labelling.
-- Execute `conda activate dtsegnet-label` to activate the labelling environment.
-- Download the model for EISeg labelling from [https://paddleseg.bj.bcebos.com/eiseg/0.5/static_hrnet18s_ocr48_aluminium.zip](https://paddleseg.bj.bcebos.com/eiseg/0.5/static_hrnet18s_ocr48_aluminium.zip).
-- Execute `python 0_Labelling_Tools/0_EISeg/exe.py` to start labelling for the segmentation stage.
-- Execute `python 0_Labelling_Tools/3_gray2pseudo_color.py <Dataset/label>` to convert the grey-scale segmentation labels to pseudo colour annotation images. **<Dataset/label>** should be replaced by the path of segmentation annotations generated by EISeg.
-- Execute `python 0_Labelling_Tools/1_Segmentation_Label_Flood_Fill.py <Dataset/label> <Dataset/Detection_Label>` to generate the detection labels from the segmentation labels. **<Dataset/label>** should be replaced by the path of segmentation annotations generated by EISeg, which contain files like: `1.png`, `1_cutout.png` and `1_pseudo.png`. **<Dataset/Detection_Label>** should be replaced by the output folder for detection labels.
-- Execute `python 0_Labelling_Tools/2_labelImg/labelImg.py` to finetune the detection labels.
-
-### 1 Train the model
-
-Follow the cells in `1_Train.ipynb` to train the detection model. The trained detection model will be stored in `<Google Drive>/DT-SegNet/Detection_Model_Output`. it will also automatically generate the dataset for the segmentation network. The generated segmentation dataset will be compressed and stored in `<Google Drive>/DT-SegNet/Segmentation_Dataset.zip`. The trained segmentation model will be stored in `<Google Drive>/DT-SegNet/Segmentation_Model_Output`.
-
-### 2 Inference
-
-Follow the cells in `2_Inference.ipynb` to infer using DT-SegNet. The output from the detection model will be stored in `<Google Drive>/DT-SegNet/Detection_Output`. The output from the segmentation model will be held in `<Google Drive>/DT-SegNet/Segmentation_Output`. The original-size segmentation mask will be stored in `<Google Drive>/DT-SegNet/Output`.
-
-### 3 Validation
-
-Follow the cells in `3_Validation.ipynb` to validate the trained models.
-
-### 4 Analysis
-
-Follow the cells in `4_Analysis.ipynb` to analyse the trained models. To compare software and algorithms, we performed experiments on [Weka trainable segmentation](https://imagej.net/plugins/tws/) and [Ilastik pixel classification](https://www.ilastik.org/documentation/pixelclassification/pixelclassification). The notebook uses our output in `Output/`.
-
-### Main Models
-
-Our best-trained models are stored on the [Github release page](https://github.com/xiazeyu/DT_SegNet/releases/).
-
-Machine-friendly download links are also provided for automatic scripts:
+## 📁 Project Structure
 
 ```
-https://github.com/xiazeyu/DT_SegNet/releases/latest/download/detection.pt
-https://github.com/xiazeyu/DT_SegNet/releases/latest/download/segmentation.pdparams
+DT_SegNet/
+├── src/
+│   ├── __init__.py
+│   ├── model.py      # YOLOv5, SegFormer, and DTSegNet models
+│   ├── dataset.py    # Dataset loaders for detection and segmentation
+│   ├── train.py      # Training script with CLI
+│   └── infer.py      # Inference script with CLI
+├── tests/
+│   └── test_model.py # Unit tests
+├── Dataset/          # Dataset directory
+├── old/              # Original implementation (archived)
+├── pyproject.toml    # Project configuration (uv/pip compatible)
+└── README.md
 ```
 
-### Output
+## 🚀 Quick Start
 
-The `Output/` folder holds this project's output images and NumPy metrics, including results from DT-SegNet, Weka and ilastik. Each experiment has an output in two different formats: the `.png` image output and the `.npy` NumPy matrix output. Each file in the folder is named by `<test id>_<software used>_<algorithm>`.
+### Installation
 
-| Software used |   Algorithm       |                            Remark                            |
-| :-----------: | :---------------: | :----------------------------------------------------------: |
-|  groundtruth  |  groundtruth      |                      Manually annotated                      |
-|    ilastik    |      LDA          |                  ilastik LDA (scikit-learn)                  |
-|    ilastik    |      RF           |             ilastik Random Forest (scikit-learn)             |
-|    ilastik    |      SVC          |             ilastik SVM C-Support (scikit-learn)             |
-|     weka      |      FRF          |        Weka hr/irb/fastRandomForest/FastRandomForest         |
-|     weka      |      MLP          | weka/classifier/functions/MultilayerPreceptron<br />with trainingTime=100 and validationSetSize=20 |
-|    PaddleSeg  |      unet         |             U-Net                                            |
-|    PaddleSeg  |      unet_3plus   |             UNet 3+                                          |
-|    PaddleSeg  |deeplabv3p_resnet50|             DeepLabV3+ with ResNet 50 Backbone               |
-|    PaddleSeg  |      B0           |             SegFormer B0                                     |
-|    PaddleSeg  |      B1           |             SegFormer B1                                     |
-|   dtsegnet    |   DT-SegNet       |           DT-SegNet, with overlapping ROIs joined            |
+1. **Install uv** (recommended package manager):
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
 
-## Reference
+2. **Create virtual environment and install dependencies**:
+```bash
+cd DT_SegNet
+uv venv
+source .venv/bin/activate  # On macOS/Linux
+# or: .venv\Scripts\activate  # On Windows
+uv pip install -e .
+```
+
+Or using pip:
+```bash
+pip install -e .
+```
+
+### Run Tests
+
+```bash
+# Quick smoke test
+python tests/test_model.py
+
+# Full test suite
+uv run pytest tests/ -v
+```
+
+## 📖 Usage
+
+### Training
+
+Train the end-to-end DT-SegNet model (two-stage detection + segmentation):
+
+```bash
+python -m src.train \
+    --data-dir ./Dataset \
+    --detector-size l \
+    --segmentor-size b1 \
+    --img-size 1280 \
+    --epochs-det 100 \
+    --epochs-seg 100 \
+    --batch-size 8 \
+    --output-dir ./outputs
+```
+
+The training process:
+1. **Stage 1**: Train YOLOv5 detector for object localization
+2. **Stage 2**: Train SegFormer segmentor for pixel-wise segmentation
+
+Output files:
+- `best.pt`: Best model checkpoint (by validation IoU)
+- `final.pt`: Final model checkpoint after training
+
+### Inference
+
+Run end-to-end inference on images:
+
+```bash
+python -m src.infer \
+    --model-path ./outputs/best.pt \
+    --input ./test_images \
+    --output ./results \
+    --save-intermediate
+```
+
+Options:
+- `--save-intermediate`: Save detection boxes and ROI masks separately
+- `--conf-threshold`: Detection confidence threshold (default: 0.475)
+- `--iou-threshold`: NMS IoU threshold (default: 0.45)
+
+## 🏗️ Model Architecture
+
+### YOLOv5 Detector
+- CSPDarknet backbone with PANet neck
+- Anchor-based detection with multi-scale outputs
+- Model sizes: `n`, `s`, `m`, `l`, `x`
+
+### SegFormer Segmentor
+- Mix Vision Transformer (MiT) backbone
+- MLP decoder head
+- Backbone sizes: `b0`, `b1`, `b2`, `b3`, `b4`, `b5`
+
+### End-to-End Pipeline
+1. **Detection**: YOLOv5 localizes precipitate regions
+2. **ROI Extraction**: Dilated bounding boxes are cropped (in memory)
+3. **Segmentation**: SegFormer segments each ROI
+4. **Merging**: ROI masks are merged into full-size output
+
+## 📊 Dataset Format
+
+### Segmentation Labels
+- PNG mask files in `labels/` directory
+- Binary: 0 = background, 255 = precipitate
+- Bounding boxes are automatically computed from segmentation masks
+
+### Directory Structure
+```
+Dataset/
+├── train/
+│   ├── 1.png
+│   ├── 2.png
+│   └── ...
+├── val/
+│   ├── 5.png
+│   └── ...
+├── test/
+│   └── ...
+└── labels/
+    ├── 1.png
+    ├── 2.png
+    ├── 5.png
+    └── ...
+```
+
+## ⚙️ Configuration
+
+### Training Parameters
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `--detector-size` | `l` | YOLOv5 model size (n/s/m/l/x) |
+| `--segmentor-size` | `b1` | SegFormer backbone (b0-b5) |
+| `--img-size` | `1280` | Input image size |
+| `--batch-size` | `8` | Training batch size |
+| `--lr` | `1e-4` | Learning rate |
+| `--epochs-det` | `100` | Detector training epochs |
+| `--epochs-seg` | `100` | Segmentor training epochs |
+
+### Inference Parameters
+| Parameter | Default | Description |
+|-----------|---------|-------------|
+| `--conf-threshold` | `0.475` | Detection confidence threshold |
+| `--iou-threshold` | `0.45` | NMS IoU threshold |
+| `--batch-size` | `1` | Inference batch size |
+
+## 🔧 Development
+
+### Run Tests
+```bash
+# Run all tests
+uv run pytest tests/ -v
+
+# Run with coverage
+uv run pytest tests/ --cov=src --cov-report=html
+
+# Run specific test
+uv run pytest tests/test_model.py::TestDTSegNet -v
+```
+
+### Code Formatting
+```bash
+# Format code
+uv run black src/ tests/
+
+# Lint code
+uv run ruff check src/ tests/
+```
+
+## 📚 API Reference
+
+### Create Models
+
+```python
+from src.model import create_detector, create_segmentor, create_dtsegnet
+
+# Create detector
+detector = create_detector(num_classes=1, model_size='l', img_size=1280)
+
+# Create segmentor
+segmentor = create_segmentor(num_classes=2, backbone_size='b1', in_channels=1)
+
+# Create end-to-end model
+model = create_dtsegnet(
+    detector_size='l',
+    segmentor_size='b1',
+    conf_threshold=0.475,
+    iou_threshold=0.45
+)
+```
+
+### Run Inference
+
+```python
+import torch
+from src.model import create_dtsegnet
+
+device = torch.device('cuda')
+model = create_dtsegnet().to(device)
+
+# Load complete model checkpoint
+checkpoint = torch.load('outputs/best.pt')
+model.load_state_dict(checkpoint['model'])
+model.eval()
+
+# Input: grayscale image (B, 1, H, W)
+image = torch.randn(1, 1, 1280, 1280).to(device)
+
+with torch.no_grad():
+    output = model(image, return_intermediate=True)
+
+# Output
+mask = output.segmentation_mask  # (B, H, W)
+detections = output.detections   # List of DetectionResult
+```
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
+
+## 📖 Citation
+
+If you use this code in your research, please cite:
 
 ```bibtex
-@article{xia2023Accurate,
- author = {Zeyu Xia and Kan Ma and Sibo Cheng and Thomas Blackburn and Ziling Peng and Kewei Zhu and Weihang Zhang and Dunhui Xiao and Alexander J Knowles and Rossella Arcucci},
- copyright = {CC BY-NC 3.0},
- doi = {10.1039/d3cp00402c},
- issn = {1463-9076},
- journal = {Physical Chemistry Chemical Physics},
- keywords = {},
- language = {English},
- month = {6},
- number = {23},
- pages = {15970--15987},
- pmid = {37265373},
- publisher = {Royal Society of Chemistry (RSC)},
- title = {Accurate Identification and Measurement of the Precipitate Area by Two-Stage Deep Neural Networks in Novel Chromium-Based Alloy},
- url = {https://pubs.rsc.org/en/content/articlelanding/2023/CP/D3CP00402C},
- volume = {25},
- year = {2023}
+@article{dtsegnet2023,
+  title={Accurate identification and measurement of the precipitate area by two-stage deep neural networks in novel chromium-based alloys},
+  journal={Physical Chemistry Chemical Physics},
+  year={2023},
+  doi={10.1039/D3CP00402C}
 }
-
 ```
 
-## License
+## 🔄 Migration from v1.0
 
-MIT License. More information see [LICENSE](./LICENSE)
+The v2.0 release is a complete rewrite with the following changes:
 
+| v1.0 | v2.0 |
+|------|------|
+| Conda | uv/pip |
+| PaddlePaddle + PyTorch | Pure PyTorch |
+| Jupyter notebooks | CLI scripts |
+| Intermediate disk I/O | In-memory processing |
+| Separate models | Unified model.py |
 
-## Contact
-
-Zeyu Xia - [zeyu.xia@connect.qut.edu.au](mailto:zeyu.xia@connect.qut.edu.au)
-
-Kan Ma - [arnaud.masysu@gmail.com](mailto:arnaud.masysu@gmail.com)
-
-Sibo Cheng - [sibo.cheng@imperial.ac.uk](mailto:sibo.cheng@imperial.ac.uk)
-
+To migrate, simply use the new CLI interface. The dataset format remains compatible.

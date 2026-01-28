@@ -1,0 +1,57 @@
+[project]
+name = "dtsegnet"
+version = "2.0.0"
+description = "DT-SegNet: Two-Stage Deep Learning for Precipitate Detection and Segmentation"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.10"
+authors = [
+    {name = "DT-SegNet Authors"}
+]
+keywords = ["deep-learning", "pytorch", "segmentation", "detection", "yolo", "segformer"]
+
+dependencies = [
+    "torch>=2.0.0",
+    "torchvision>=0.15.0",
+    "numpy>=1.24.0",
+    "pillow>=10.0.0",
+    "opencv-python>=4.8.0",
+    "tqdm>=4.66.0",
+    "pyyaml>=6.0",
+    "timm>=0.9.0",  # For pretrained SegFormer backbone
+    "albumentations>=1.3.0",
+    "matplotlib>=3.7.0",
+    "pandas>=2.0.0",
+    "tensorboard>=2.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.7.0",
+    "ruff>=0.0.280",
+]
+
+[project.scripts]
+dtsegnet-train = "src.train:main"
+dtsegnet-infer = "src.infer:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+
+[tool.black]
+line-length = 100
+target-version = ["py310"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]

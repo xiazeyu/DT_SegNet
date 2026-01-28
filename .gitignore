@@ -1,29 +1,70 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
-# Temporary data
-*.zip
-Dataset/Segmentation_Dataset/
-Dataset/SD_KF/
+# Virtual environments
+.venv/
+venv/
+ENV/
+env/
+.env
 
-# Model files
-*.pt
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
 
-# Training logs
-1_Detection_Model/wandb/
-
-# Cache files
-**/*.cache
-
-# Checkpoints
+# Jupyter
 .ipynb_checkpoints/
 
-# Model outputs
-Detection_Model_Output
-Segmentation_Model_Output
-1_Detection_Model/runs/
-Baseline_2_Model_Output/
-Models/
-FineTuneDataset/
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+.nox/
+
+# Output directories
+outputs/
+inference_output/
+runs/
+logs/
+
+# Model weights
+*.pt
+*.pth
+*.onnx
+*.pdparams
+!pretrained/
+
+# Data
+*.npy
+*.npz
+
+# System
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+tensorboard/
